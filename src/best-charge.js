@@ -4,7 +4,8 @@ function bestCharge(inputs) {
   let selectedObject = getDishshesByInput(inputs,allItems);
   addIsSpecificFlag(selectedObject,allDiscount);
   let noneDiscountTotal = getNoneDiscountTotal(selectedObject);
-  return selectedObject;
+  let overDecDiscountObj = overDecDiscount(noneDiscountTotal);
+  //return selectedObject;
 }
 
 function getDishshesByInput(selectedItems,allItems) {
@@ -29,4 +30,11 @@ function getNoneDiscountTotal(selectedObjArr) {
   return selectedObjArr.reduce((total,value)=>{
     return total + value.singleTotal;
   },0);
+}
+
+function overDecDiscount(noneDiscountTotal) {
+  let overDecDiscountObj = {};
+  overDecDiscountObj.totalPrice = noneDiscountTotal >= 30 ? noneDiscountTotal - 6 : noneDiscountTotal;
+  overDecDiscountObj.description = `使用优惠:\n满30减6元，省6元\n`;
+  return overDecDiscountObj
 }
