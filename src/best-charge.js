@@ -7,6 +7,7 @@ function bestCharge(inputs) {
   let overDecDiscountObj = overDecDiscount(noneDiscountTotal);
   let halfPriceDiscountObj = halfPriceDiscount(selectedObject,noneDiscountTotal);
   let goodsList = getGoodsList(selectedObject);
+  let finnalDiscount = compareTwoSelectedBetter(overDecDiscountObj,halfPriceDiscountObj,noneDiscountTotal);
   return selectedObject;
 }
 
@@ -64,3 +65,23 @@ function getGoodsList(selectedObject) {
   })
   return goodsList;
 }
+
+function compareTwoSelectedBetter(overDecDiscountObj,halfPriceDiscountObj,noneDiscountTotal) {
+  let finnalDiscount = {};
+  if(overDecDiscountObj.totalPrice <= halfPriceDiscountObj.totalPrice) {
+    if(overDecDiscountObj.totalPrice === noneDiscountTotal) {
+      finnalDiscount.totalPrice = noneDiscountTotal;
+      finnalDiscount.description = '';
+    }
+    else {
+      finnalDiscount.totalPrice = overDecDiscountObj.totalPrice;
+      finnalDiscount.description = overDecDiscountObj.description;
+    }
+  }
+  else {
+    finnalDiscount.totalPrice = halfPriceDiscountObj.totalPrice;
+    finnalDiscount.description = halfPriceDiscountObj.description;
+  }
+  return finnalDiscount;
+}
+
