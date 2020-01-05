@@ -3,6 +3,7 @@ function bestCharge(inputs) {
   let allDiscount = loadPromotions();
   let selectedObject = getDishshesByInput(inputs,allItems);
   addIsSpecificFlag(selectedObject,allDiscount);
+  let noneDiscountTotal = getNoneDiscountTotal(selectedObject);
   return selectedObject;
 }
 
@@ -24,4 +25,8 @@ function addIsSpecificFlag(selectedObjArr,allDiscount) {
   selectedObjArr.forEach(value=>value.isSpecific = (-1 !== allDiscount[1].items.indexOf(value.id)));
 }
 
-
+function getNoneDiscountTotal(selectedObjArr) {
+  return selectedObjArr.reduce((total,value)=>{
+    return total + value.singleTotal;
+  },0);
+}
