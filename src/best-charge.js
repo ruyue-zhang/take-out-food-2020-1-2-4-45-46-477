@@ -6,6 +6,7 @@ function bestCharge(inputs) {
   let noneDiscountTotal = getNoneDiscountTotal(selectedObject);
   let overDecDiscountObj = overDecDiscount(noneDiscountTotal);
   let halfPriceDiscountObj = halfPriceDiscount(selectedObject,noneDiscountTotal);
+  let goodsList = getGoodsList(selectedObject);
   return selectedObject;
 }
 
@@ -54,4 +55,12 @@ function halfPriceDiscount(selectedObject,noneDiscountTotal) {
   },0);
   halfPriceDiscountObj.description = `使用优惠:\n指定菜品半价(${specificGoods.join('，')})，省${noneDiscountTotal - halfPriceDiscountObj.totalPrice}元\n`;
   return halfPriceDiscountObj;
+}
+
+function getGoodsList(selectedObject) {
+  let goodsList = '';
+  selectedObject.forEach(value=>{
+    goodsList += `${value.name} x ${value.count} = ${value.singleTotal}元\n`
+  })
+  return goodsList;
 }
