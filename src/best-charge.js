@@ -8,7 +8,7 @@ function bestCharge(inputs) {
   let halfPriceDiscountObj = halfPriceDiscount(selectedObject,noneDiscountTotal);
   let goodsList = getGoodsList(selectedObject);
   let finnalDiscount = compareTwoSelectedBetter(overDecDiscountObj,halfPriceDiscountObj,noneDiscountTotal);
-  return outputInformation(goodsList,finnalDiscount);;
+  return outputInformation(goodsList,finnalDiscount);
 }
 
 function getDishshesByInput(selectedItems,allItems) {
@@ -69,19 +69,20 @@ function getGoodsList(selectedObject) {
 
 function compareTwoSelectedBetter(overDecDiscountObj,halfPriceDiscountObj,noneDiscountTotal) {
   let finnalDiscount = {};
+  
   if(overDecDiscountObj.totalPrice <= halfPriceDiscountObj.totalPrice) {
     if(overDecDiscountObj.totalPrice === noneDiscountTotal) {
       finnalDiscount.totalPrice = noneDiscountTotal;
       finnalDiscount.description = '';
     }
     else {
-      finnalDiscount.totalPrice = overDecDiscountObj.totalPrice;
-      finnalDiscount.description = overDecDiscountObj.description + `-----------------------------------\n`;
+      finnalDiscount = overDecDiscountObj;
+      finnalDiscount.description += `-----------------------------------\n`;
     }
   }
   else {
-    finnalDiscount.totalPrice = halfPriceDiscountObj.totalPrice;
-    finnalDiscount.description = halfPriceDiscountObj.description + `-----------------------------------\n`;
+    finnalDiscount = halfPriceDiscountObj;
+    finnalDiscount.description += `-----------------------------------\n`;
   }
   return finnalDiscount;
 }
