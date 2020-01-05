@@ -5,7 +5,8 @@ function bestCharge(inputs) {
   addIsSpecificFlag(selectedObject,allDiscount);
   let noneDiscountTotal = getNoneDiscountTotal(selectedObject);
   let overDecDiscountObj = overDecDiscount(noneDiscountTotal);
-  //return selectedObject;
+  let halfPriceDiscountObj = halfPriceDiscount(selectedObject,noneDiscountTotal);
+  return selectedObject;
 }
 
 function getDishshesByInput(selectedItems,allItems) {
@@ -37,4 +38,20 @@ function overDecDiscount(noneDiscountTotal) {
   overDecDiscountObj.totalPrice = noneDiscountTotal >= 30 ? noneDiscountTotal - 6 : noneDiscountTotal;
   overDecDiscountObj.description = `使用优惠:\n满30减6元，省6元\n`;
   return overDecDiscountObj
+}
+
+function halfPriceDiscount(selectedObject,noneDiscountTotal) {
+  let halfPriceDiscountObj = {};
+  let specificGoods = [];
+  halfPriceDiscountObj.totalPrice = selectedObject.reduce((total,currentValue)=>{
+    if(currentValue.isSpecific) {
+      specificGoods.push(currentValue.name);
+      return total + currentValue.singleTotal / 2;
+    }
+    else {
+      return total + currentValue.singleTotal;
+    }
+  },0);
+  halfPriceDiscountObj.description = `使用优惠:\n指定菜品半价(${specificGoods.join('，')})，省${noneDiscountTotal - halfPriceDiscountObj.totalPrice}元\n`;
+  return halfPriceDiscountObj;
 }
