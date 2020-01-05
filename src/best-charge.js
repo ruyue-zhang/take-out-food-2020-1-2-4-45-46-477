@@ -8,7 +8,7 @@ function bestCharge(inputs) {
   let halfPriceDiscountObj = halfPriceDiscount(selectedObject,noneDiscountTotal);
   let goodsList = getGoodsList(selectedObject);
   let finnalDiscount = compareTwoSelectedBetter(overDecDiscountObj,halfPriceDiscountObj,noneDiscountTotal);
-  return selectedObject;
+  return outputInformation(goodsList,finnalDiscount);;
 }
 
 function getDishshesByInput(selectedItems,allItems) {
@@ -63,6 +63,7 @@ function getGoodsList(selectedObject) {
   selectedObject.forEach(value=>{
     goodsList += `${value.name} x ${value.count} = ${value.singleTotal}元\n`
   })
+  goodsList += `-----------------------------------\n`;
   return goodsList;
 }
 
@@ -75,13 +76,18 @@ function compareTwoSelectedBetter(overDecDiscountObj,halfPriceDiscountObj,noneDi
     }
     else {
       finnalDiscount.totalPrice = overDecDiscountObj.totalPrice;
-      finnalDiscount.description = overDecDiscountObj.description;
+      finnalDiscount.description = overDecDiscountObj.description + `-----------------------------------\n`;
     }
   }
   else {
     finnalDiscount.totalPrice = halfPriceDiscountObj.totalPrice;
-    finnalDiscount.description = halfPriceDiscountObj.description;
+    finnalDiscount.description = halfPriceDiscountObj.description + `-----------------------------------\n`;
   }
   return finnalDiscount;
+}
+
+function outputInformation(goodsList,finnalDiscount) {
+  let output = `============= 订餐明细 =============\n${goodsList}${finnalDiscount.description}总计：${finnalDiscount.totalPrice}元\n===================================`;
+  return output;
 }
 
